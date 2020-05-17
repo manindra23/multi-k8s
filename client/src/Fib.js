@@ -14,39 +14,24 @@ class Fib extends Component {
   }
 
   async fetchValues() {
-      try {
-        const values = await axios.get('/api/values/current');
-        this.setState({ values: values.data });
-      } catch (e) {
-        console.error('Failure!');
-        console.error(e.response.status);
-      }
-   
+    const values = await axios.get('/api/values/current');
+    this.setState({ values: values.data });
   }
 
   async fetchIndexes() {
-    try {
     const seenIndexes = await axios.get('/api/values/all');
     this.setState({
       seenIndexes: seenIndexes.data
     });
-    } catch (e) {
-        console.error('Failure!');
-        console.error(e.response.status);
-    }  
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    try {
+
     await axios.post('/api/values', {
       index: this.state.index
     });
     this.setState({ index: '' });
-    } catch (e) {
-        console.error('Failure!');
-        console.error(e.response.status);
-    }  
   };
 
   renderSeenIndexes() {
@@ -55,6 +40,7 @@ class Fib extends Component {
 
   renderValues() {
     const entries = [];
+
     for (let key in this.state.values) {
       entries.push(
         <div key={key}>
@@ -86,6 +72,6 @@ class Fib extends Component {
       </div>
     );
   }
-};
+}
 
 export default Fib;
